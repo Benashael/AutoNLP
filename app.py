@@ -113,22 +113,23 @@ elif page == "Tokenization":
         max_word_limit = 300
         st.write(f"Maximum Word Limit: {max_word_limit} words")
         text_input = st.text_area("Enter text:")
-        if len(word_tokenize(text_input)) > max_word_limit:
-            st.error(f"Word count exceeds the maximum limit of {max_word_limit} words.")
-        else:
-            tokens = tokenize_text(text_input, tokenization_type)
-            st.write("Tokens:", tokens)
-            
-            # Download tokenized content as a txt file
-            if st.button("Download Tokenized Content"):
-                tokenized_content = " ".join(tokens)
-                tokenized_file = BytesIO(tokenized_content.encode())
-                st.download_button(
-                    label="Download Tokenized Content",
-                    data=tokenized_file,
-                    key="tokenized_content.txt",
-                    on_click=None,
-                )
+        if st.button("Perform Tokenization")
+            if len(word_tokenize(text_input)) > max_word_limit:
+                st.error(f"Word count exceeds the maximum limit of {max_word_limit} words.")
+            else:
+                tokens = tokenize_text(text_input, tokenization_type)
+                st.write("Tokens:", tokens)
+                
+                # Download tokenized content as a txt file
+                if st.button("Download Tokenized Content"):
+                    tokenized_content = " ".join(tokens)
+                    tokenized_file = BytesIO(tokenized_content.encode())
+                    st.download_button(
+                        label="Download Tokenized Content",
+                        data=tokenized_file,
+                        key="tokenized_content.txt",
+                        on_click=None,
+                    )
     
     elif input_type == "TXT File Import":
         max_word_limit = 3000
