@@ -1,0 +1,8 @@
+nltk
+streamlit
+nltk-data
+wordcloud
+matplotlib
+pandas
+docx2txt
+langdetect
