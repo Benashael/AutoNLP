@@ -470,3 +470,23 @@ elif page == "N-Grams":
                     st.error("Invalid input: The uploaded file contains non-text data or is not in UTF-8 format.")
             else:
                 st.info("Please upload a .txt file.")
+
+# About Page
+elif page == "About":
+    st.title("🚀 About the AutoNLP Web App")
+    
+    st.markdown("""
+    Welcome to the AutoNLP web app, a versatile tool designed to streamline Natural Language Processing (NLP) tasks and make text analysis easier than ever! 🎉
+
+    This app empowers you to perform various NLP tasks, including tokenization, stopwords removal, stemming, lemmatization, Part-of-Speech (POS) tagging, word cloud generation, and N-Grams analysis. Whether you're a data scientist, developer, or language enthusiast, AutoNLP is here to simplify and enhance your text processing.
+
+    It's built using Streamlit and Python, offering a user-friendly interface to explore the fascinating world of NLP. Feel free to experiment, analyze, and visualize text data effortlessly. And, it's brought to you by Team AI Hub.
+
+    Ready to embark on your NLP journey? Let's start exploring the world of natural language processing using different inputs! 💡
+    """)
+
+    st.markdown("""
+    *_Regards,_*
+    
+    *_Team AI Hub_*
+    """)
