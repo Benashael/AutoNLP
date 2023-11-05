@@ -3,6 +3,7 @@ import nltk
 nltk.download("punkt")
 nltk.download("stopwords")
 nltk.download("wordnet")
+nltk.download('averaged_perceptron_tagger')
 from wordcloud import WordCloud
 import matplotlib.pyplot as plt
 from nltk.corpus import stopwords
