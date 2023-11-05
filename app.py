@@ -345,7 +345,7 @@ elif page == "POS Tagging":
                         csv =pos_df.to_csv(index=False)
                         b64 = base64.b64encode(csv.encode()).decode()  # Encode to base64
                         href = f'data:file/csv;base64,{b64}'
-                        st.markdown(f'<a href="{href}" download="pos_tagged_content.csv">Click here to download POS Tagged document</a>', unsafe_allow_html=True)
+                        st.markdown(f'<a href="{href}" download="pos_tagged_content.csv">Click here to download POS Tagged Document</a>', unsafe_allow_html=True)
                         
                 except UnicodeDecodeError:
                     st.error("Invalid input: The uploaded file contains non-text data or is not in UTF-8 format.")
