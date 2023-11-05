@@ -105,7 +105,7 @@ if page == "Home Page":
 
 # Tokenization Page
 elif page == "Tokenization":
-    st.header("Tokenization Page")
+    st.title("Tokenization Page")
     tokenization_type = st.radio("Choose tokenization type", ["Word Tokenization", "Sentence Tokenization"])
     input_type = st.radio("Choose input type", ["Text Input", "TXT File Import"])
     
