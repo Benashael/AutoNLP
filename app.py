@@ -107,7 +107,7 @@ if page == "Home Page":
 elif page == "Tokenization":
     st.title("Tokenization Page")
     tokenization_type = st.radio("Choose tokenization type", ["Word Tokenization", "Sentence Tokenization"])
-    input_type = st.radio("Choose input type", ["Text Input", "TXT File Import"])
+    input_type = st.radio("Choose input type", ["Text Input", "TXT File Upload"])
     
     if input_type == "Text Input":
         max_word_limit = 300
@@ -121,7 +121,7 @@ elif page == "Tokenization":
                 st.subheader("Tokens:")
                 st.write(tokens)
     
-    elif input_type == "TXT File Import":
+    elif input_type == "TXT File Upload":
         max_word_limit = 3000
         st.write(f"Maximum Word Limit: {max_word_limit} words")
         uploaded_file = st.file_uploader("Upload a text file", type=["txt"])
@@ -144,63 +144,48 @@ elif page == "Tokenization":
 
 # Stopwords Removal Page
 elif page == "Stopwords Removal":
-    st.subheader("Stopwords Removal Page")
+    st.title("Stopwords Removal Page")
     tokenization_type = "Word Tokenization"
-    input_type = st.radio("Choose input type", ["Text Input", "TXT File Import"])
+    input_type = st.radio("Choose input type", ["Text Input", "TXT File Upload"])
     
     if input_type == "Text Input":
         max_word_limit = 300
         st.write(f"Maximum Word Limit: {max_word_limit} words")
         text_input = st.text_area("Enter text:")
-        if len(word_tokenize(text_input)) > max_word_limit:
-            st.error(f"Word count exceeds the maximum limit of {max_word_limit} words.")
-        else:
-            tokens = tokenize_text(text_input, tokenization_type)
-            st.write("Tokens:", tokens)
-            
-            # Remove stopwords
-            filtered_tokens = remove_stopwords(tokens)
-            st.write("After Stopwords Removal:", filtered_tokens)
-            
-            # Download filtered content as a txt file
-            if st.button("Download Processed Content"):
-                processed_content = " ".join(filtered_tokens)
-                processed_file = BytesIO(processed_content.encode())
-                st.download_button(
-                    label="Download Processed Content",
-                    data=processed_file,
-                    key="processed_content.txt",
-                    on_click=None,
-                )
+        if st.button("Perform Stopwords Removal"):
+            if len(word_tokenize(text_input)) > max_word_limit:
+                st.error(f"Word count exceeds the maximum limit of {max_word_limit} words.")
+            else:
+                tokens = tokenize_text(text_input, tokenization_type)
+                st.subheader("Tokens (Before Stopwords Removal):")
+                st.write(tokens)
+                
+                # Remove stopwords
+                filtered_tokens = remove_stopwords(tokens)
+                st.subheader("Tokens (After Stopwords Removal):)
+                st.write(filtered_tokens)
     
-    elif input_type == "TXT File Import":
+    elif input_type == "TXT File Upload":
         max_word_limit = 3000
         st.write(f"Maximum Word Limit: {max_word_limit} words")
         uploaded_file = st.file_uploader("Upload a text file", type=["txt"])
-        if uploaded_file is not None:
-            file_contents = uploaded_file.read()
-            try:
-                file_contents = file_contents.decode("utf-8")
-                if len(word_tokenize(file_contents)) > max_word_limit:
-                    st.error(f"Word count exceeds the maximum limit of {max_word_limit} words.")
-                else:
-                    tokens = tokenize_text(file_contents, tokenization_type)
-                    st.write("Tokens:", tokens)
+        if st.button("Perform Stopwords Removal"):
+            if uploaded_file is not None:
+                file_contents = uploaded_file.read()
+                try:
+                    file_contents = file_contents.decode("utf-8")
+                    if len(word_tokenize(file_contents)) > max_word_limit:
+                        st.error(f"Word count exceeds the maximum limit of {max_word_limit} words.")
+                    else:
+                        tokens = tokenize_text(file_contents, tokenization_type)
+                        st.subheader("Tokens (Before Stopwords Removal):")
+                        st.write(tokens)
+                        
+                        # Remove stopwords
+                        filtered_tokens = remove_stopwords(tokens)
+                        st.subheader("Tokens (After Stopwords Removal):)
+                        st.write(filtered_tokens)
                     
-                    # Remove stopwords
-                    filtered_tokens = remove_stopwords(tokens)
-                    st.write("After Stopwords Removal:", filtered_tokens)
-                    
-                    # Download filtered content as a txt file
-                    if st.button("Download Processed Content"):
-                        processed_content = " ".join(filtered_tokens)
-                        processed_file = BytesIO(processed_content.encode())
-                        st.download_button(
-                            label="Download Processed Content",
-                            data=processed_file,
-                            key="processed_content.txt",
-                            on_click=None,
-                        )
             except UnicodeDecodeError:
                 st.error("Invalid input: The uploaded file contains non-text data or is not in UTF-8 format.")
         else:
@@ -208,63 +193,48 @@ elif page == "Stopwords Removal":
 
 # Stemming Page
 elif page == "Stemming":
-    st.subheader("Stemming Page")
+    st.title("Stemming Page")
     tokenization_type = "Word Tokenization"
-    input_type = st.radio("Choose input type", ["Text Input", "TXT File Import"])
+    input_type = st.radio("Choose input type", ["Text Input", "TXT File Upload"])
     
     if input_type == "Text Input":
         max_word_limit = 300
         st.write(f"Maximum Word Limit: {max_word_limit} words")
         text_input = st.text_area("Enter text:")
-        if len(word_tokenize(text_input)) > max_word_limit:
-            st.error(f"Word count exceeds the maximum limit of {max_word_limit} words.")
-        else:
-            tokens = tokenize_text(text_input, tokenization_type)
-            st.write("Tokens:", tokens)
-            
-            # Perform stemming
-            stemmed_tokens = perform_stemming(tokens)
-            st.write("After Stemming:", stemmed_tokens)
-            
-            # Download stemmed content as a txt file
-            if st.button("Download Processed Content"):
-                processed_content = " ".join(stemmed_tokens)
-                processed_file = BytesIO(processed_content.encode())
-                st.download_button(
-                    label="Download Processed Content",
-                    data=processed_file,
-                    key="processed_content.txt",
-                    on_click=None,
-                )
+        if st.button("Perform Stemming"):
+            if len(word_tokenize(text_input)) > max_word_limit:
+                st.error(f"Word count exceeds the maximum limit of {max_word_limit} words.")
+            else:
+                tokens = tokenize_text(text_input, tokenization_type)
+                st.subheader("Tokens (Before Stemming):")
+                st.write(tokens)
+                
+                # Perform stemming
+                stemmed_tokens = perform_stemming(tokens)
+                st.subheader("Tokens (After Stemming):")
+                st.write(stemmed_tokens)
     
-    elif input_type == "TXT File Import":
+    elif input_type == "TXT File Upload":
         max_word_limit = 3000
         st.write(f"Maximum Word Limit: {max_word_limit} words")
         uploaded_file = st.file_uploader("Upload a text file", type=["txt"])
-        if uploaded_file is not None:
-            file_contents = uploaded_file.read()
-            try:
-                file_contents = file_contents.decode("utf-8")
-                if len(word_tokenize(file_contents)) > max_word_limit:
-                    st.error(f"Word count exceeds the maximum limit of {max_word_limit} words.")
-                else:
-                    tokens = tokenize_text(file_contents, tokenization_type)
-                    st.write("Tokens:", tokens)
+        if st.button("Perform Stemming"):
+            if uploaded_file is not None:
+                file_contents = uploaded_file.read()
+                try:
+                    file_contents = file_contents.decode("utf-8")
+                    if len(word_tokenize(file_contents)) > max_word_limit:
+                        st.error(f"Word count exceeds the maximum limit of {max_word_limit} words.")
+                    else:
+                        tokens = tokenize_text(file_contents, tokenization_type)
+                        st.subheader("Tokens (Before Stemming):")
+                        st.write(tokens)
+                        
+                        # Perform stemming
+                        stemmed_tokens = perform_stemming(tokens)
+                        st.subheader("Tokens (After Stemming):")
+                        st.write(stemmed_tokens)
                     
-                    # Perform stemming
-                    stemmed_tokens = perform_stemming(tokens)
-                    st.write("After Stemming:", stemmed_tokens)
-                    
-                    # Download stemmed content as a txt file
-                    if st.button("Download Processed Content"):
-                        processed_content = " ".join(stemmed_tokens)
-                        processed_file = BytesIO(processed_content.encode())
-                        st.download_button(
-                            label="Download Processed Content",
-                            data=processed_file,
-                            key="processed_content.txt",
-                            on_click=None,
-                        )
             except UnicodeDecodeError:
                 st.error("Invalid input: The uploaded file contains non-text data or is not in UTF-8 format.")
         else:
@@ -272,63 +242,48 @@ elif page == "Stemming":
 
 # Lemmatization Page
 elif page == "Lemmatization":
-    st.subheader("Lemmatization Page")
+    st.title("Lemmatization Page")
     tokenization_type = "Word Tokenization"
-    input_type = st.radio("Choose input type", ["Text Input", "TXT File Import"])
+    input_type = st.radio("Choose input type", ["Text Input", "TXT File Upload"])
     
     if input_type == "Text Input":
         max_word_limit = 300
         st.write(f"Maximum Word Limit: {max_word_limit} words")
         text_input = st.text_area("Enter text:")
-        if len(word_tokenize(text_input)) > max_word_limit:
-            st.error(f"Word count exceeds the maximum limit of {max_word_limit} words.")
-        else:
-            tokens = tokenize_text(text_input, tokenization_type)
-            st.write("Tokens:", tokens)
-            
-            # Perform lemmatization
-            lemmatized_tokens = perform_lemmatization(tokens)
-            st.write("After Lemmatization:", lemmatized_tokens)
-            
-            # Download lemmatized content as a txt file
-            if st.button("Download Processed Content"):
-                processed_content = " ".join(lemmatized_tokens)
-                processed_file = BytesIO(processed_content.encode())
-                st.download_button(
-                    label="Download Processed Content",
-                    data=processed_file,
-                    key="processed_content.txt",
-                    on_click=None,
-                )
+        if st.button("Perform Lemmatization):
+            if len(word_tokenize(text_input)) > max_word_limit:
+                st.error(f"Word count exceeds the maximum limit of {max_word_limit} words.")
+            else:
+                tokens = tokenize_text(text_input, tokenization_type)
+                st.subheader("Tokens (Before Lemmatization):")
+                st.write(tokens)
+                
+                # Perform lemmatization
+                lemmatized_tokens = perform_lemmatization(tokens)
+                st.subheader("Tokens (After Lemmatization):")
+                st.write(lemmatized_tokens)
     
-    elif input_type == "TXT File Import":
+    elif input_type == "TXT File Upload":
         max_word_limit = 3000
         st.write(f"Maximum Word Limit: {max_word_limit} words")
         uploaded_file = st.file_uploader("Upload a text file", type=["txt"])
-        if uploaded_file is not None:
-            file_contents = uploaded_file.read()
-            try:
-                file_contents = file_contents.decode("utf-8")
-                if len(word_tokenize(file_contents)) > max_word_limit:
-                    st.error(f"Word count exceeds the maximum limit of {max_word_limit} words.")
-                else:
-                    tokens = tokenize_text(file_contents, tokenization_type)
-                    st.write("Tokens:", tokens)
+        if st.button("Perform Lemmatization):
+            if uploaded_file is not None:
+                file_contents = uploaded_file.read()
+                try:
+                    file_contents = file_contents.decode("utf-8")
+                    if len(word_tokenize(file_contents)) > max_word_limit:
+                        st.error(f"Word count exceeds the maximum limit of {max_word_limit} words.")
+                    else:
+                        tokens = tokenize_text(file_contents, tokenization_type)
+                        st.subheader("Tokens (Before Lemmatization):")
+                        st.write(tokens)
+                        
+                        # Perform lemmatization
+                        lemmatized_tokens = perform_lemmatization(tokens)
+                        st.subheader("Tokens (After Lemmatization):")
+                        st.write(lemmatized_tokens)
                     
-                    # Perform lemmatization
-                    lemmatized_tokens = perform_lemmatization(tokens)
-                    st.write("After Lemmatization:", lemmatized_tokens)
-                    
-                    # Download lemmatized content as a txt file
-                    if st.button("Download Processed Content"):
-                        processed_content = " ".join(lemmatized_tokens)
-                        processed_file = BytesIO(processed_content.encode())
-                        st.download_button(
-                            label="Download Processed Content",
-                            data=processed_file,
-                            key="processed_content.txt",
-                            on_click=None,
-                        )
             except UnicodeDecodeError:
                 st.error("Invalid input: The uploaded file contains non-text data or is not in UTF-8 format.")
         else:
