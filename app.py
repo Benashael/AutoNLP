@@ -368,15 +368,15 @@ elif page == "Word Cloud":
         max_word_limit = 300
         st.write(f"Maximum Word Limit: {max_word_limit} words")
         text_input = st.text_area("Enter text:")
-        if len(word_tokenize(text_input)) > max_word_limit:
-            st.error(f"Word count exceeds the maximum limit of {max_word_limit} words.")
-        else:
-            tokens = tokenize_text(text_input, tokenization_type)
-            st.subheader("Tokens:")
-            st.write(tokens)
-            
-            # Generate and display the word cloud
-            if st.button("Generate Word Cloud"):
+        if st.button("Generate Word Cloud"):
+            if len(word_tokenize(text_input)) > max_word_limit:
+                st.error(f"Word count exceeds the maximum limit of {max_word_limit} words.")
+            else:
+                tokens = tokenize_text(text_input, tokenization_type)
+                st.subheader("Tokens:")
+                st.write(tokens)
+                
+                # Generate and display the word cloud
                 st.subheader("Word Cloud:")
                 generate_word_cloud(tokens)
     
@@ -384,26 +384,26 @@ elif page == "Word Cloud":
         max_word_limit = 3000
         st.write(f"Maximum Word Limit: {max_word_limit} words")
         uploaded_file = st.file_uploader("Upload a text file", type=["txt"])
-        if uploaded_file is not None:
-            file_contents = uploaded_file.read()
-            try:
-                file_contents = file_contents.decode("utf-8")
-                if len(word_tokenize(file_contents)) > max_word_limit:
-                    st.error(f"Word count exceeds the maximum limit of {max_word_limit} words.")
-                else:
-                    tokens = tokenize_text(file_contents, tokenization_type)
-                    st.subheader("Tokens:")
-                    st.write(tokens)
-                    
-                    # Generate and display the word cloud
-                    if st.button("Generate Word Cloud"):
+        if st.button("Generate Word Cloud"):
+            if uploaded_file is not None:
+                file_contents = uploaded_file.read()
+                try:
+                    file_contents = file_contents.decode("utf-8")
+                    if len(word_tokenize(file_contents)) > max_word_limit:
+                        st.error(f"Word count exceeds the maximum limit of {max_word_limit} words.")
+                    else:
+                        tokens = tokenize_text(file_contents, tokenization_type)
+                        st.subheader("Tokens:")
+                        st.write(tokens)
+                        
+                        # Generate and display the word cloud
                         st.subheader("Word Cloud:")
                         generate_word_cloud(tokens)
-                       
-            except UnicodeDecodeError:
-                st.error("Invalid input: The uploaded file contains non-text data or is not in UTF-8 format.")
-        else:
-            st.info("Please upload a .txt file.")
+                           
+                except UnicodeDecodeError:
+                    st.error("Invalid input: The uploaded file contains non-text data or is not in UTF-8 format.")
+            else:
+                st.info("Please upload a .txt file.")
 
 # N-Grams Page
 elif page == "N-Grams":
