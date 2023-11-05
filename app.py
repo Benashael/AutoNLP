@@ -65,11 +65,15 @@ def pos_tagging(text):
 # Function to create a word cloud
 @st.cache_resource
 def generate_word_cloud(text):
-    wordcloud = WordCloud(width=800, height=400, background_color="white").generate(" ".join(text))
-    plt.figure(figsize=(10, 5))
-    plt.imshow(wordcloud, interpolation="bilinear")
-    plt.axis("off")
-    st.pyplot(plt)
+    if len(text) == 0:
+        st.warning("Cannot generate a word cloud from empty text.")
+
+    else:
+        wordcloud = WordCloud(width=800, height=400, background_color="white").generate(" ".join(text))
+        plt.figure(figsize=(10, 5))
+        plt.imshow(wordcloud, interpolation="bilinear")
+        plt.axis("off")
+        st.pyplot(plt)
     
 # Function to create n-grams
 @st.cache_resource
