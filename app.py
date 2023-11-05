@@ -437,17 +437,6 @@ elif page == "N-Grams":
                 st.subheader(f"{n}-Grams Text:")
                 st.write(n_grams_text)
                 
-                # Download n-grams performed text as a txt file
-                if st.button(f"Download {n}-Grams Text"):
-                    n_grams_content = "\n".join(n_grams_text)
-                    n_grams_file = BytesIO(n_grams_content.encode())
-                    st.download_button(
-                        label=f"Click here to download {n}-Grams Text",
-                        data=n_grams_file,
-                        key=f"{n}_grams_text.txt",
-                        on_click=None,
-                    )
-        
     elif input_type == "TXT File Upload":
         max_word_limit = 3000
         st.write(f"Maximum Word Limit: {max_word_limit} words")
@@ -477,16 +466,6 @@ elif page == "N-Grams":
                         st.subheader(f"{n}-Grams Text:")
                         st.write(n_grams_text)
                         
-                        # Download n-grams performed text as a txt file
-                        if st.button(f"Download {n}-Grams Text"):
-                            n_grams_content = "\n".join(n_grams_text)
-                            n_grams_file = BytesIO(n_grams_content.encode())
-                            st.download_button(
-                                label=f"Click here to download {n}-Grams Text",
-                                data=n_grams_file,
-                                key=f"{n}_grams_text.txt",
-                                on_click=None,
-                            )
                 except UnicodeDecodeError:
                     st.error("Invalid input: The uploaded file contains non-text data or is not in UTF-8 format.")
             else:
