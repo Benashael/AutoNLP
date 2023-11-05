@@ -71,17 +71,17 @@ def generate_word_cloud(text):
     plt.axis("off")
     st.pyplot(plt)
 
-# Function to create n-grams
-@st.cache_resource
-def create_ngrams(tokens, n):
-    n_grams = list(ngrams(tokens, n))
-    return n_grams
-    
     # Save the word cloud as a JPG image to a temporary file
     img_buffer = io.BytesIO()
     plt.savefig(img_buffer, format="jpg")
     img_buffer.seek(0)
     return img_buffer
+    
+# Function to create n-grams
+@st.cache_resource
+def create_ngrams(tokens, n):
+    n_grams = list(ngrams(tokens, n))
+    return n_grams
 
 # Function to generate n-grams text
 @st.cache_resource
