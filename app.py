@@ -13,9 +13,9 @@ from io import BytesIO
 import pandas as pd
 
 # Set up Streamlit app
-st.title("AutoNLP Streamlit Web App")
-
 st.set_page_config(page_title="AutoNLP Application", page_icon="📚", layout="wide")
+
+st.title("AutoNLP Streamlit Web App")
 
 page = st.sidebar.radio("**Select a Page**", ["Home Page", "Tokenization", "Stopwords Removal", "Stemming", "Lemmatization", "POS Tagging", "Word Cloud", "N-Grams", "About"])
 
