@@ -70,12 +70,6 @@ def generate_word_cloud(text):
     plt.imshow(wordcloud, interpolation="bilinear")
     plt.axis("off")
     st.pyplot(plt)
-
-    # Save the word cloud as a JPG image to a temporary file
-    img_buffer = io.BytesIO()
-    plt.savefig(img_buffer, format="jpg")
-    img_buffer.seek(0)
-    return img_buffer
     
 # Function to create n-grams
 @st.cache_resource
@@ -379,6 +373,7 @@ elif page == "Word Cloud":
             
             # Generate and display the word cloud
             if st.button("Generate Word Cloud"):
+                st.subheader("Word Cloud")
                 generate_word_cloud(tokens)
     
     elif input_type == "TXT File Upload":
@@ -398,25 +393,9 @@ elif page == "Word Cloud":
                     
                     # Generate and display the word cloud
                     if st.button("Generate Word Cloud"):
-                        # generate_word_cloud(tokens)
-                        # generate the word cloud and save as a JPG image
-                        img_buffer = generate_word_cloud(tokens)
-                        
-                        # Display the word cloud image
-                        st.image(img_buffer)
-                        
-                        # Download the word cloud as a JPG image
-                        if st.button("Download Word Cloud (JPG)"):
-                            st.markdown("### Downloading Word Cloud Image...")
-                            st.markdown("Please wait while the download starts.")
-                            st.markdown("---")
-                            st.download_button(
-                                label="Download Word Cloud (JPG)",
-                                data=img_buffer,
-                                key="word_cloud.jpg",
-                                on_click=None,
-                            )
-                            
+                        st.subheader("Word Cloud")
+                        generate_word_cloud(tokens)
+                       
             except UnicodeDecodeError:
                 st.error("Invalid input: The uploaded file contains non-text data or is not in UTF-8 format.")
         else:
