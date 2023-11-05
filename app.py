@@ -14,8 +14,10 @@ from nltk.util import ngrams
 import docx2txt
 from langdetect import detect
 import base64
+import io
 from io import BytesIO
 import pandas as pd
+from PIL import Image
 
 # Set up Streamlit app
 st.set_page_config(page_title="AutoNLP Application", page_icon="📚", layout="wide")
@@ -74,6 +76,12 @@ def generate_word_cloud(text):
 def create_ngrams(tokens, n):
     n_grams = list(ngrams(tokens, n))
     return n_grams
+    
+    # Save the word cloud as a JPG image to a temporary file
+    img_buffer = io.BytesIO()
+    plt.savefig(img_buffer, format="jpg")
+    img_buffer.seek(0)
+    return img_buffer
 
 # Function to generate n-grams text
 @st.cache_resource
@@ -354,9 +362,9 @@ elif page == "POS Tagging":
 
 # Word Cloud Page
 elif page == "Word Cloud":
-    st.subheader("Word Cloud Page")
+    st.title("Word Cloud Page")
     tokenization_type = "Word Tokenization"
-    input_type = st.radio("Choose input type", ["Text Input", "TXT File Import"])
+    input_type = st.radio("Choose input type", ["Text Input", "TXT File Upload"])
     
     if input_type == "Text Input":
         max_word_limit = 300
@@ -366,13 +374,14 @@ elif page == "Word Cloud":
             st.error(f"Word count exceeds the maximum limit of {max_word_limit} words.")
         else:
             tokens = tokenize_text(text_input, tokenization_type)
-            st.write("Tokens:", tokens)
+            st.subheader("Tokens:")
+            st.write(tokens)
             
             # Generate and display the word cloud
             if st.button("Generate Word Cloud"):
                 generate_word_cloud(tokens)
     
-    elif input_type == "TXT File Import":
+    elif input_type == "TXT File Upload":
         max_word_limit = 3000
         st.write(f"Maximum Word Limit: {max_word_limit} words")
         uploaded_file = st.file_uploader("Upload a text file", type=["txt"])
@@ -384,11 +393,30 @@ elif page == "Word Cloud":
                     st.error(f"Word count exceeds the maximum limit of {max_word_limit} words.")
                 else:
                     tokens = tokenize_text(file_contents, tokenization_type)
-                    st.write("Tokens:", tokens)
+                    st.subheader("Tokens:")
+                    st.write(tokens)
                     
                     # Generate and display the word cloud
                     if st.button("Generate Word Cloud"):
-                        generate_word_cloud(tokens)
+                        # generate_word_cloud(tokens)
+                        # generate the word cloud and save as a JPG image
+                        img_buffer = generate_word_cloud(tokens)
+                        
+                        # Display the word cloud image
+                        st.image(img_buffer, use_container_width=True)
+                        
+                        # Download the word cloud as a JPG image
+                        if st.button("Download Word Cloud (JPG)"):
+                            st.markdown("### Downloading Word Cloud Image...")
+                            st.markdown("Please wait while the download starts.")
+                            st.markdown("---")
+                            st.download_button(
+                                label="Download Word Cloud (JPG)",
+                                data=img_buffer,
+                                key="word_cloud.jpg",
+                                on_click=None,
+                            )
+                            
             except UnicodeDecodeError:
                 st.error("Invalid input: The uploaded file contains non-text data or is not in UTF-8 format.")
         else:
