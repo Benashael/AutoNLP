@@ -416,76 +416,78 @@ elif page == "N-Grams":
         max_word_limit = 300
         st.write(f"Maximum Word Limit: {max_word_limit} words")
         text_input = st.text_area("Enter text:")
-        if len(word_tokenize(text_input)) > max_word_limit:
-            st.error(f"Word count exceeds the maximum limit of {max_word_limit} words.")
-        else:
-            tokens = tokenize_text(text_input, tokenization_type)
-            st.subheader("Tokens:")
-            st.write(tokens)
-            
-            if n_gram_type == "Uni-Grams (1-Grams)":
-                n = 1
-            elif n_gram_type == "Bi-Grams (2-Grams)":
-                n = 2
-            elif n_gram_type == "Tri-Grams (3-Grams)":
-                n = 3
-            
-            n_grams = create_ngrams(tokens, n)
-            n_grams_text = generate_ngrams_text(n_grams)
-            
-            st.subheader(f"{n}-Grams Text:")
-            st.write(n_grams_text)
-            
-            # Download n-grams performed text as a txt file
-            if st.button(f"Download {n}-Grams Text"):
-                n_grams_content = "\n".join(n_grams_text)
-                n_grams_file = BytesIO(n_grams_content.encode())
-                st.download_button(
-                    label=f"Click here to download {n}-Grams Text",
-                    data=n_grams_file,
-                    key=f"{n}_grams_text.txt",
-                    on_click=None,
-                )
-    
+        if st.button("Generate N-Grams"):
+            if len(word_tokenize(text_input)) > max_word_limit:
+                st.error(f"Word count exceeds the maximum limit of {max_word_limit} words.")
+            else:
+                tokens = tokenize_text(text_input, tokenization_type)
+                st.subheader("Tokens:")
+                st.write(tokens)
+                
+                if n_gram_type == "Uni-Grams (1-Grams)":
+                    n = 1
+                elif n_gram_type == "Bi-Grams (2-Grams)":
+                    n = 2
+                elif n_gram_type == "Tri-Grams (3-Grams)":
+                    n = 3
+                
+                n_grams = create_ngrams(tokens, n)
+                n_grams_text = generate_ngrams_text(n_grams)
+                
+                st.subheader(f"{n}-Grams Text:")
+                st.write(n_grams_text)
+                
+                # Download n-grams performed text as a txt file
+                if st.button(f"Download {n}-Grams Text"):
+                    n_grams_content = "\n".join(n_grams_text)
+                    n_grams_file = BytesIO(n_grams_content.encode())
+                    st.download_button(
+                        label=f"Click here to download {n}-Grams Text",
+                        data=n_grams_file,
+                        key=f"{n}_grams_text.txt",
+                        on_click=None,
+                    )
+        
     elif input_type == "TXT File Upload":
         max_word_limit = 3000
         st.write(f"Maximum Word Limit: {max_word_limit} words")
         uploaded_file = st.file_uploader("Upload a text file", type=["txt"])
-        if uploaded_file is not None:
-            file_contents = uploaded_file.read()
-            try:
-                file_contents = file_contents.decode("utf-8")
-                if len(word_tokenize(file_contents)) > max_word_limit:
-                    st.error(f"Word count exceeds the maximum limit of {max_word_limit} words.")
-                else:
-                    tokens = tokenize_text(file_contents, tokenization_type)
-                    st.subheader("Tokens:")
-                    st.write(tokens)
-                    
-                    if n_gram_type == "Uni-Grams (1-Grams)":
-                        n = 1
-                    elif n_gram_type == "Bi-Grams (2-Grams)":
-                        n = 2
-                    elif n_gram_type == "Tri-Grams (3-Grams)":
-                        n = 3
-                    
-                    n_grams = create_ngrams(tokens, n)
-                    n_grams_text = generate_ngrams_text(n_grams)
-                    
-                    st.subheader(f"{n}-Grams Text:")
-                    st.write(n_grams_text)
-                    
-                    # Download n-grams performed text as a txt file
-                    if st.button(f"Download {n}-Grams Text"):
-                        n_grams_content = "\n".join(n_grams_text)
-                        n_grams_file = BytesIO(n_grams_content.encode())
-                        st.download_button(
-                            label=f"Click here to download {n}-Grams Text",
-                            data=n_grams_file,
-                            key=f"{n}_grams_text.txt",
-                            on_click=None,
-                        )
-            except UnicodeDecodeError:
-                st.error("Invalid input: The uploaded file contains non-text data or is not in UTF-8 format.")
-        else:
-            st.info("Please upload a .txt file.")
+        if st.button("Generate N-Grams"):
+            if uploaded_file is not None:
+                file_contents = uploaded_file.read()
+                try:
+                    file_contents = file_contents.decode("utf-8")
+                    if len(word_tokenize(file_contents)) > max_word_limit:
+                        st.error(f"Word count exceeds the maximum limit of {max_word_limit} words.")
+                    else:
+                        tokens = tokenize_text(file_contents, tokenization_type)
+                        st.subheader("Tokens:")
+                        st.write(tokens)
+                        
+                        if n_gram_type == "Uni-Grams (1-Grams)":
+                            n = 1
+                        elif n_gram_type == "Bi-Grams (2-Grams)":
+                            n = 2
+                        elif n_gram_type == "Tri-Grams (3-Grams)":
+                            n = 3
+                        
+                        n_grams = create_ngrams(tokens, n)
+                        n_grams_text = generate_ngrams_text(n_grams)
+                        
+                        st.subheader(f"{n}-Grams Text:")
+                        st.write(n_grams_text)
+                        
+                        # Download n-grams performed text as a txt file
+                        if st.button(f"Download {n}-Grams Text"):
+                            n_grams_content = "\n".join(n_grams_text)
+                            n_grams_file = BytesIO(n_grams_content.encode())
+                            st.download_button(
+                                label=f"Click here to download {n}-Grams Text",
+                                data=n_grams_file,
+                                key=f"{n}_grams_text.txt",
+                                on_click=None,
+                            )
+                except UnicodeDecodeError:
+                    st.error("Invalid input: The uploaded file contains non-text data or is not in UTF-8 format.")
+            else:
+                st.info("Please upload a .txt file.")
