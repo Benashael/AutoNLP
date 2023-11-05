@@ -162,7 +162,7 @@ elif page == "Stopwords Removal":
                 
                 # Remove stopwords
                 filtered_tokens = remove_stopwords(tokens)
-                st.subheader("Tokens (After Stopwords Removal):)
+                st.subheader("Tokens (After Stopwords Removal):")
                 st.write(filtered_tokens)
     
     elif input_type == "TXT File Upload":
@@ -183,7 +183,7 @@ elif page == "Stopwords Removal":
                         
                         # Remove stopwords
                         filtered_tokens = remove_stopwords(tokens)
-                        st.subheader("Tokens (After Stopwords Removal):)
+                        st.subheader("Tokens (After Stopwords Removal):")
                         st.write(filtered_tokens)
                     
             except UnicodeDecodeError:
