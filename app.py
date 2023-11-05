@@ -135,30 +135,31 @@ elif page == "Tokenization":
         max_word_limit = 3000
         st.write(f"Maximum Word Limit: {max_word_limit} words")
         uploaded_file = st.file_uploader("Upload a text file", type=["txt"])
-        if uploaded_file is not None:
-            file_contents = uploaded_file.read()
-            try:
-                file_contents = file_contents.decode("utf-8")
-                if len(word_tokenize(file_contents)) > max_word_limit:
-                    st.error(f"Word count exceeds the maximum limit of {max_word_limit} words.")
-                else:
-                    tokens = tokenize_text(file_contents, tokenization_type)
-                    st.write("Tokens:", tokens)
-                    
-                    # Download tokenized content as a txt file
-                    if st.button("Download Tokenized Content"):
-                        tokenized_content = " ".join(tokens)
-                        tokenized_file = BytesIO(tokenized_content.encode())
-                        st.download_button(
-                            label="Download Tokenized Content",
-                            data=tokenized_file,
-                            key="tokenized_content.txt",
-                            on_click=None,
-                        )
-            except UnicodeDecodeError:
-                st.error("Invalid input: The uploaded file contains non-text data or is not in UTF-8 format.")
-        else:
-            st.info("Please upload a .txt file.")
+        if st.button("Perform Tokenization"):
+            if uploaded_file is not None:
+                file_contents = uploaded_file.read()
+                try:
+                    file_contents = file_contents.decode("utf-8")
+                    if len(word_tokenize(file_contents)) > max_word_limit:
+                        st.error(f"Word count exceeds the maximum limit of {max_word_limit} words.")
+                    else:
+                        tokens = tokenize_text(file_contents, tokenization_type)
+                        st.write("Tokens:", tokens)
+                        
+                        # Download tokenized content as a txt file
+                        if st.button("Download Tokenized Content"):
+                            tokenized_content = " ".join(tokens)
+                            tokenized_file = BytesIO(tokenized_content.encode())
+                            st.download_button(
+                                label="Download Tokenized Content",
+                                data=tokenized_file,
+                                key="tokenized_content.txt",
+                                on_click=None,
+                            )
+                except UnicodeDecodeError:
+                    st.error("Invalid input: The uploaded file contains non-text data or is not in UTF-8 format.")
+            else:
+                st.info("Please upload a .txt file.")
 
 # Stopwords Removal Page
 elif page == "Stopwords Removal":
