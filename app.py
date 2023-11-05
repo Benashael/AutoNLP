@@ -113,7 +113,7 @@ elif page == "Tokenization":
         max_word_limit = 300
         st.write(f"Maximum Word Limit: {max_word_limit} words")
         text_input = st.text_area("Enter text:")
-        if st.button("Perform Tokenization")
+        if st.button("Perform Tokenization"):
             if len(word_tokenize(text_input)) > max_word_limit:
                 st.error(f"Word count exceeds the maximum limit of {max_word_limit} words.")
             else:
