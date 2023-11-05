@@ -291,49 +291,66 @@ elif page == "Lemmatization":
 
 # POS Tagging Page
 elif page == "POS Tagging":
-    st.subheader("Part-of-Speech (POS) Tagging Page")
+    st.title("Part-of-Speech (POS) Tagging Page")
     tokenization_type = "Word Tokenization"
-    input_type = st.radio("Choose input type", ["Text Input", "TXT File Import"])
+    input_type = st.radio("Choose input type", ["Text Input", "TXT File Upload"])
     
     if input_type == "Text Input":
         max_word_limit = 300
         st.write(f"Maximum Word Limit: {max_word_limit} words")
         text_input = st.text_area("Enter text:")
-        if len(word_tokenize(text_input)) > max_word_limit:
-            st.error(f"Word count exceeds the maximum limit of {max_word_limit} words.")
-        else:
-            tokens = tokenize_text(text_input, tokenization_type)
-            st.write("Tokens:", tokens)
-            
-            # Perform POS tagging
-            pos_tags = pos_tagging(tokens)
-            pos_df = pd.DataFrame(pos_tags, columns=["Word", "POS Tag"])
-            st.write("POS Tags:")
-            st.dataframe(pos_df)
-    
-    elif input_type == "TXT File Import":
+        if st.button("Perform POS Tagging"):
+            if len(word_tokenize(text_input)) > max_word_limit:
+                st.error(f"Word count exceeds the maximum limit of {max_word_limit} words.")
+            else:
+                tokens = tokenize_text(text_input, tokenization_type)
+                st.subheader("Tokens:")
+                st.write(tokens)
+                
+                # Perform POS tagging
+                pos_tags = pos_tagging(tokens)
+                pos_df = pd.DataFrame(pos_tags, columns=["Word", "POS Tag"])
+                st.subheader("POS Tags:")
+                st.dataframe(pos_df)
+
+                # Download the dataset using base64 encoding
+                csv =pos_df.to_csv(index=False)
+                b64 = base64.b64encode(csv.encode()).decode()  # Encode to base64
+                href = f'data:file/csv;base64,{b64}'
+                st.markdown(f'<a href="{href}" download="pos_tagged_content.csv">Click here to download POS Tagged document</a>', unsafe_allow_html=True)
+        
+    elif input_type == "TXT File Upload":
         max_word_limit = 3000
         st.write(f"Maximum Word Limit: {max_word_limit} words")
         uploaded_file = st.file_uploader("Upload a text file", type=["txt"])
-        if uploaded_file is not None:
-            file_contents = uploaded_file.read()
-            try:
-                file_contents = file_contents.decode("utf-8")
-                if len(word_tokenize(file_contents)) > max_word_limit:
-                    st.error(f"Word count exceeds the maximum limit of {max_word_limit} words.")
-                else:
-                    tokens = tokenize_text(file_contents, tokenization_type)
-                    st.write("Tokens:", tokens)
-                    
-                    # Perform POS tagging
-                    pos_tags = pos_tagging(tokens)
-                    pos_df = pd.DataFrame(pos_tags, columns=["Word", "POS Tag"])
-                    st.write("POS Tags:")
-                    st.dataframe(pos_df)
-            except UnicodeDecodeError:
-                st.error("Invalid input: The uploaded file contains non-text data or is not in UTF-8 format.")
-        else:
-            st.info("Please upload a .txt file.")
+        if st.button("Perform POS Tagging"):
+            if uploaded_file is not None:
+                file_contents = uploaded_file.read()
+                try:
+                    file_contents = file_contents.decode("utf-8")
+                    if len(word_tokenize(file_contents)) > max_word_limit:
+                        st.error(f"Word count exceeds the maximum limit of {max_word_limit} words.")
+                    else:
+                        tokens = tokenize_text(file_contents, tokenization_type)
+                        st.subheader("Tokens:")
+                        st.write(tokens)
+                        
+                        # Perform POS tagging
+                        pos_tags = pos_tagging(tokens)
+                        pos_df = pd.DataFrame(pos_tags, columns=["Word", "POS Tag"])
+                        st.subheader("POS Tags:")
+                        st.dataframe(pos_df)
+
+                        # Download the dataset using base64 encoding
+                        csv =pos_df.to_csv(index=False)
+                        b64 = base64.b64encode(csv.encode()).decode()  # Encode to base64
+                        href = f'data:file/csv;base64,{b64}'
+                        st.markdown(f'<a href="{href}" download="pos_tagged_content.csv">Click here to download POS Tagged document</a>', unsafe_allow_html=True)
+                        
+                except UnicodeDecodeError:
+                    st.error("Invalid input: The uploaded file contains non-text data or is not in UTF-8 format.")
+            else:
+                st.info("Please upload a .txt file.")
 
 # Word Cloud Page
 elif page == "Word Cloud":
