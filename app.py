@@ -25,6 +25,7 @@ st.title("AutoNLP Streamlit Web App")
 page = st.sidebar.radio("**Select a Page**", ["Home Page", "Tokenization", "Stopwords Removal", "Stemming", "Lemmatization", "POS Tagging", "Word Cloud", "N-Grams", "About"])
 
 # Function to tokenize text
+@st.cache_resource
 def tokenize_text(text, tokenization_type):
     if tokenization_type == "Word Tokenization":
         tokens = word_tokenize(text)
@@ -33,29 +34,34 @@ def tokenize_text(text, tokenization_type):
     return tokens
 
 # Function to remove stopwords
+@st.cache_resource
 def remove_stopwords(text):
     stop_words = set(stopwords.words("english"))
     filtered_text = [word for word in text if word.lower() not in stop_words]
     return filtered_text
 
 # Function to perform stemming
+@st.cache_resource
 def perform_stemming(text):
     stemmer = PorterStemmer()
     stemmed_text = [stemmer.stem(word) for word in text]
     return stemmed_text
 
 # Function to perform lemmatization
+@st.cache_resource
 def perform_lemmatization(text):
     lemmatizer = WordNetLemmatizer()
     lemmatized_text = [lemmatizer.lemmatize(word) for word in text]
     return lemmatized_text
 
 # Function for Part-of-Speech (POS) tagging
+@st.cache_resource
 def pos_tagging(text):
     pos_tags = nltk.pos_tag(text)
     return pos_tags
 
 # Function to create a word cloud
+@st.cache_resource
 def generate_word_cloud(text):
     wordcloud = WordCloud(width=800, height=400, background_color="white").generate(" ".join(text))
     plt.figure(figsize=(10, 5))
@@ -64,11 +70,13 @@ def generate_word_cloud(text):
     st.pyplot(plt)
 
 # Function to create n-grams
+@st.cache_resource
 def create_ngrams(tokens, n):
     n_grams = list(ngrams(tokens, n))
     return n_grams
 
 # Function to generate n-grams text
+@st.cache_resource
 def generate_ngrams_text(n_grams):
     n_grams_text = [" ".join(gram) for gram in n_grams]
     return n_grams_text
@@ -436,7 +444,7 @@ elif page == "N-Grams":
     st.subheader("N-Grams Page")
     tokenization_type = "Word Tokenization"
     input_type = st.radio("Choose input type", ["Text Input", "TXT File Import"])
-    n_gram_type = st.radio("Choose N-Gram Type", ["Uni-Grams", "Bi-Grams", "Tri-Grams"])
+    n_gram_type = st.radio("Choose N-Gram Type", ["Uni-Grams (1-Grams)", "Bi-Grams (2-Grams)", "Tri-Grams (3-Grams)"])
     
     if input_type == "Text Input":
         max_word_limit = 300
@@ -448,11 +456,11 @@ elif page == "N-Grams":
             tokens = tokenize_text(text_input, tokenization_type)
             st.write("Tokens:", tokens)
             
-            if n_gram_type == "Uni-Grams":
+            if n_gram_type == "Uni-Grams (1-Grams)":
                 n = 1
-            elif n_gram_type == "Bi-Grams":
+            elif n_gram_type == "Bi-Grams (2-Grams)":
                 n = 2
-            elif n_gram_type == "Tri-Grams":
+            elif n_gram_type == "Tri-Grams (3-Grams)":
                 n = 3
             
             n_grams = create_ngrams(tokens, n)
@@ -486,11 +494,11 @@ elif page == "N-Grams":
                     tokens = tokenize_text(file_contents, tokenization_type)
                     st.write("Tokens:", tokens)
                     
-                    if n_gram_type == "Uni-Grams":
+                    if n_gram_type == "Uni-Grams (1-Grams)":
                         n = 1
-                    elif n_gram_type == "Bi-Grams":
+                    elif n_gram_type == "Bi-Grams (2-Grams)":
                         n = 2
-                    elif n_gram_type == "Tri-Grams":
+                    elif n_gram_type == "Tri-Grams (3-Grams)":
                         n = 3
                     
                     n_grams = create_ngrams(tokens, n)
