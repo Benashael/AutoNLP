@@ -250,7 +250,7 @@ elif page == "Lemmatization":
         max_word_limit = 300
         st.write(f"Maximum Word Limit: {max_word_limit} words")
         text_input = st.text_area("Enter text:")
-        if st.button("Perform Lemmatization):
+        if st.button("Perform Lemmatization"):
             if len(word_tokenize(text_input)) > max_word_limit:
                 st.error(f"Word count exceeds the maximum limit of {max_word_limit} words.")
             else:
@@ -267,7 +267,7 @@ elif page == "Lemmatization":
         max_word_limit = 3000
         st.write(f"Maximum Word Limit: {max_word_limit} words")
         uploaded_file = st.file_uploader("Upload a text file", type=["txt"])
-        if st.button("Perform Lemmatization):
+        if st.button("Perform Lemmatization"):
             if uploaded_file is not None:
                 file_contents = uploaded_file.read()
                 try:
