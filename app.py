@@ -90,10 +90,10 @@ if page == "Home Page":
         "You can perform the following tasks:"
     )
     
-    st.markdown("1. **Tokenization Page:** Tokenize text into words or sentences.")
-    st.markdown("2. **Stopwords Removal Page:** Remove common stopwords from the text.")
-    st.markdown("3. **Stemming Page:** Apply word stemming to the text.")
-    st.markdown("4. **Lemmatization Page:** Perform word lemmatization on the text.")
+    st.markdown("1. **Tokenization Page:** Tokenize text into words or sentences. And, you also have the option to copy the processed content to clipboard.")
+    st.markdown("2. **Stopwords Removal Page:** Remove common stopwords from the text. And, you also have the option to copy the processed content to clipboard.")
+    st.markdown("3. **Stemming Page:** Apply word stemming to the text. And, you also have the option to copy the processed content to clipboard.")
+    st.markdown("4. **Lemmatization Page:** Perform word lemmatization on the text. And, you also have the option to copy the processed content to clipboard.")
     st.markdown("5. **Part-of-Speech (POS) Tagging Page:** Tag words with their grammatical roles.")
     st.markdown("6. **Word Cloud Generation Page:** Generate a word cloud from the text.")
     st.markdown("7. **N-Grams Page:** Create uni-grams, bi-grams, or tri-grams from the text.")
@@ -105,7 +105,7 @@ if page == "Home Page":
 
 # Tokenization Page
 elif page == "Tokenization":
-    st.subheader("Tokenization Page")
+    st.header("Tokenization Page")
     tokenization_type = st.radio("Choose tokenization type", ["Word Tokenization", "Sentence Tokenization"])
     input_type = st.radio("Choose input type", ["Text Input", "TXT File Import"])
     
@@ -118,18 +118,8 @@ elif page == "Tokenization":
                 st.error(f"Word count exceeds the maximum limit of {max_word_limit} words.")
             else:
                 tokens = tokenize_text(text_input, tokenization_type)
-                st.write("Tokens:", tokens)
-                
-                # Download tokenized content as a txt file
-                if st.button("Download Tokenized Content"):
-                    tokenized_content = " ".join(tokens)
-                    tokenized_file = BytesIO(tokenized_content.encode())
-                    st.download_button(
-                        label="Download Tokenized Content",
-                        data=tokenized_file,
-                        key="tokenized_content.txt",
-                        on_click=None,
-                    )
+                st.subheader("Tokens:")
+                st.write(tokens)
     
     elif input_type == "TXT File Import":
         max_word_limit = 3000
@@ -144,18 +134,9 @@ elif page == "Tokenization":
                         st.error(f"Word count exceeds the maximum limit of {max_word_limit} words.")
                     else:
                         tokens = tokenize_text(file_contents, tokenization_type)
-                        st.write("Tokens:", tokens)
+                        st.subheader("Tokens:")
+                        st.write(tokens)
                         
-                        # Download tokenized content as a txt file
-                        if st.button("Download Tokenized Content"):
-                            tokenized_content = " ".join(tokens)
-                            tokenized_file = BytesIO(tokenized_content.encode())
-                            st.download_button(
-                                label="Download Tokenized Content",
-                                data=tokenized_file,
-                                key="tokenized_content.txt",
-                                on_click=None,
-                            )
                 except UnicodeDecodeError:
                     st.error("Invalid input: The uploaded file contains non-text data or is not in UTF-8 format.")
             else:
