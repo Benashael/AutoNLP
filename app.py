@@ -441,7 +441,7 @@ elif page == "N-Grams":
                 n_grams_content = "\n".join(n_grams_text)
                 n_grams_file = BytesIO(n_grams_content.encode())
                 st.download_button(
-                    label=f"Download {n}-Grams Text",
+                    label=f"Click here to download {n}-Grams Text",
                     data=n_grams_file,
                     key=f"{n}_grams_text.txt",
                     on_click=None,
@@ -480,7 +480,7 @@ elif page == "N-Grams":
                         n_grams_content = "\n".join(n_grams_text)
                         n_grams_file = BytesIO(n_grams_content.encode())
                         st.download_button(
-                            label=f"Download {n}-Grams Text",
+                            label=f"Click here to download {n}-Grams Text",
                             data=n_grams_file,
                             key=f"{n}_grams_text.txt",
                             on_click=None,
