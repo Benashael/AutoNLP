@@ -403,7 +403,7 @@ elif page == "Word Cloud":
                         img_buffer = generate_word_cloud(tokens)
                         
                         # Display the word cloud image
-                        st.image(img_buffer, use_container_width=True)
+                        st.image(img_buffer)
                         
                         # Download the word cloud as a JPG image
                         if st.button("Download Word Cloud (JPG)"):
