@@ -373,7 +373,7 @@ elif page == "Word Cloud":
             
             # Generate and display the word cloud
             if st.button("Generate Word Cloud"):
-                st.subheader("Word Cloud")
+                st.subheader("Word Cloud:")
                 generate_word_cloud(tokens)
     
     elif input_type == "TXT File Upload":
@@ -393,7 +393,7 @@ elif page == "Word Cloud":
                     
                     # Generate and display the word cloud
                     if st.button("Generate Word Cloud"):
-                        st.subheader("Word Cloud")
+                        st.subheader("Word Cloud:")
                         generate_word_cloud(tokens)
                        
             except UnicodeDecodeError:
