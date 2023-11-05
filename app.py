@@ -186,10 +186,10 @@ elif page == "Stopwords Removal":
                         st.subheader("Tokens (After Stopwords Removal):")
                         st.write(filtered_tokens)
                     
-            except UnicodeDecodeError:
-                st.error("Invalid input: The uploaded file contains non-text data or is not in UTF-8 format.")
-        else:
-            st.info("Please upload a .txt file.")
+                except UnicodeDecodeError:
+                    st.error("Invalid input: The uploaded file contains non-text data or is not in UTF-8 format.")
+            else:
+                st.info("Please upload a .txt file.")
 
 # Stemming Page
 elif page == "Stemming":
@@ -235,10 +235,10 @@ elif page == "Stemming":
                         st.subheader("Tokens (After Stemming):")
                         st.write(stemmed_tokens)
                     
-            except UnicodeDecodeError:
-                st.error("Invalid input: The uploaded file contains non-text data or is not in UTF-8 format.")
-        else:
-            st.info("Please upload a .txt file.")
+                except UnicodeDecodeError:
+                    st.error("Invalid input: The uploaded file contains non-text data or is not in UTF-8 format.")
+            else:
+                st.info("Please upload a .txt file.")
 
 # Lemmatization Page
 elif page == "Lemmatization":
@@ -284,10 +284,10 @@ elif page == "Lemmatization":
                         st.subheader("Tokens (After Lemmatization):")
                         st.write(lemmatized_tokens)
                     
-            except UnicodeDecodeError:
-                st.error("Invalid input: The uploaded file contains non-text data or is not in UTF-8 format.")
-        else:
-            st.info("Please upload a .txt file.")
+                except UnicodeDecodeError:
+                    st.error("Invalid input: The uploaded file contains non-text data or is not in UTF-8 format.")
+            else:
+                st.info("Please upload a .txt file.")
 
 # POS Tagging Page
 elif page == "POS Tagging":
