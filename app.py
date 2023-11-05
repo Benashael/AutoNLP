@@ -2,6 +2,7 @@ import streamlit as st
 import nltk
 nltk.download("punkt")
 nltk.download("stopwords")
+nltk.download("wordnet")
 from wordcloud import WordCloud
 import matplotlib.pyplot as plt
 from nltk.corpus import stopwords
