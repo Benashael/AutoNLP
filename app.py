@@ -1,5 +1,6 @@
 import streamlit as st
 import nltk
+nltk.download("punkt")
 from wordcloud import WordCloud
 import matplotlib.pyplot as plt
 from nltk.corpus import stopwords
