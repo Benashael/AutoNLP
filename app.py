@@ -407,9 +407,9 @@ elif page == "Word Cloud":
 
 # N-Grams Page
 elif page == "N-Grams":
-    st.subheader("N-Grams Page")
+    st.title("N-Grams Page")
     tokenization_type = "Word Tokenization"
-    input_type = st.radio("Choose input type", ["Text Input", "TXT File Import"])
+    input_type = st.radio("Choose input type", ["Text Input", "TXT File Upload"])
     n_gram_type = st.radio("Choose N-Gram Type", ["Uni-Grams (1-Grams)", "Bi-Grams (2-Grams)", "Tri-Grams (3-Grams)"])
     
     if input_type == "Text Input":
@@ -420,7 +420,8 @@ elif page == "N-Grams":
             st.error(f"Word count exceeds the maximum limit of {max_word_limit} words.")
         else:
             tokens = tokenize_text(text_input, tokenization_type)
-            st.write("Tokens:", tokens)
+            st.subheader("Tokens:")
+            st.write(tokens)
             
             if n_gram_type == "Uni-Grams (1-Grams)":
                 n = 1
@@ -432,7 +433,7 @@ elif page == "N-Grams":
             n_grams = create_ngrams(tokens, n)
             n_grams_text = generate_ngrams_text(n_grams)
             
-            st.write(f"{n}-Grams Text:")
+            st.subheader(f"{n}-Grams Text:")
             st.write(n_grams_text)
             
             # Download n-grams performed text as a txt file
@@ -446,7 +447,7 @@ elif page == "N-Grams":
                     on_click=None,
                 )
     
-    elif input_type == "TXT File Import":
+    elif input_type == "TXT File Upload":
         max_word_limit = 3000
         st.write(f"Maximum Word Limit: {max_word_limit} words")
         uploaded_file = st.file_uploader("Upload a text file", type=["txt"])
@@ -458,7 +459,8 @@ elif page == "N-Grams":
                     st.error(f"Word count exceeds the maximum limit of {max_word_limit} words.")
                 else:
                     tokens = tokenize_text(file_contents, tokenization_type)
-                    st.write("Tokens:", tokens)
+                    st.subheader("Tokens:")
+                    st.write(tokens)
                     
                     if n_gram_type == "Uni-Grams (1-Grams)":
                         n = 1
@@ -470,7 +472,7 @@ elif page == "N-Grams":
                     n_grams = create_ngrams(tokens, n)
                     n_grams_text = generate_ngrams_text(n_grams)
                     
-                    st.write(f"{n}-Grams Text:")
+                    st.subheader(f"{n}-Grams Text:")
                     st.write(n_grams_text)
                     
                     # Download n-grams performed text as a txt file
