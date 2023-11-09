@@ -11,6 +11,7 @@ from nltk.stem import PorterStemmer
 from nltk.stem import WordNetLemmatizer
 from nltk.tokenize import word_tokenize, sent_tokenize
 from nltk.util import ngrams
+from nltk import FreqDist
 import docx2txt
 from langdetect import detect
 import base64
@@ -24,7 +25,7 @@ st.set_page_config(page_title="AutoNLP Application", page_icon="📚", layout="w
 
 st.title("AutoNLP Streamlit Web App")
 
-page = st.sidebar.radio("**Select a Page**", ["Home Page", "Tokenization", "Stopwords Removal", "Stemming", "Lemmatization", "POS Tagging", "Word Cloud", "N-Grams", "About"])
+page = st.sidebar.radio("**Select a Page**", ["Home Page", "Tokenization", "Stopwords Removal", "Stemming", "Lemmatization", "POS Tagging", "Word Cloud", "N-Grams", "Keyword Extraction", "About"])
 
 # Function to tokenize text
 @st.cache_resource
@@ -86,6 +87,26 @@ def create_ngrams(tokens, n):
 def generate_ngrams_text(n_grams):
     n_grams_text = [" ".join(gram) for gram in n_grams]
     return n_grams_text
+
+# Function to extract keywords
+@st.cache_resource
+def extract_keywords(text):
+    stop_words = set(stopwords.words("english"))
+    words = word_tokenize(text)
+    filtered_words = [word.lower() for word in words if word.isalnum() and word.lower() not in stop_words]
+    
+    # Calculate word frequency
+    word_freq = FreqDist(filtered_words)
+    
+    # Display keywords and their frequencies
+    st.subheader("Keywords and Their Frequencies:")
+    for word, freq in word_freq.most_common():
+        st.write(f"- {word}: {freq}")
+    
+    # Plot keyword frequency distribution
+    plt.figure(figsize=(10, 5))
+    word_freq.plot(20, cumulative=False)
+    st.pyplot(plt)
 
 if page == "Home Page":
     # Home page content
@@ -470,6 +491,45 @@ elif page == "N-Grams":
                     st.error("Invalid input: The uploaded file contains non-text data or is not in UTF-8 format.")
             else:
                 st.info("Please upload a .txt file.")
+
+elif page == "Keyword Extraction":
+    st.title("Keyword Extraction Page")
+    input_type = st.radio("Choose input type", ["Text Input", "TXT File Import"])
+    
+    if input_type == "Text Input":
+        max_word_limit = 300
+        st.write(f"Maximum Word Limit: {max_word_limit} words")
+        text_input = st.text_area("Enter text:", height=200)
+        
+        # Check for empty input text
+        if not text_input.strip():
+            st.error("Input text is empty. Please provide text for keyword extraction.")
+        # Check for word limit in text input
+        elif len(word_tokenize(text_input)) > max_word_limit:
+            st.error(f"Word count exceeds the maximum limit of {max_word_limit} words.")
+        elif st.button("Extract Keywords"):
+            extract_keywords(text_input)
+    
+    elif input_type == "TXT File Import":
+        max_word_limit = 3000
+        st.write(f"Maximum Word Limit: {max_word_limit} words")
+        uploaded_file = st.file_uploader("Upload a text file", type=["txt"])
+        
+        if uploaded_file is not None:
+            file_contents = uploaded_file.read().decode("utf-8")
+            try:
+                file_contents = file_contents.decode("utf-8")
+                # Check for word limit in uploaded file
+                if len(word_tokenize(file_contents)) > max_word_limit:
+                    st.error(f"Word count exceeds the maximum limit of {max_word_limit} words.")
+                else:
+                    st.text(file_contents)
+                    if st.button("Extract Keywords"):
+                        extract_keywords(file_contents)
+            except UnicodeDecodeError:
+            st.error("Invalid input: The uploaded file contains non-text data or is not in UTF-8 format.")
+        else:
+            st.info("Please upload a .txt file.")
 
 # About Page
 elif page == "About":
