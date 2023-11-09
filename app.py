@@ -565,18 +565,19 @@ elif page == "Text Similarity":
     st.write(f"Maximum Word Limit: {max_word_limit} words")
     text1 = st.text_area("Enter Text 1:")
     text2 = st.text_area("Enter Text 2:")
-    
-    # Check for empty input texts
-    if not text1.strip() or not text2.strip():
-        st.error("Please provide both texts for similarity comparison.")
-    elif len(word_tokenize(text1)) > max_word_limit or len(word_tokenize(text2)) > max_word_limit:
-        st.error(f"Word count exceeds the maximum limit of {max_word_limit} words.")
-    else:
-        similarity_score = calculate_similarity(text1, text2)
-        
-        # Display similarity score
-        st.subheader("Similarity Score:")
-        st.write(f"The cosine similarity between the two texts is: {similarity_score:.2f}")
+
+    if st.button("Find Text Similarity"):
+        # Check for empty input texts
+        if not text1.strip() or not text2.strip():
+            st.error("Please provide both texts for similarity comparison.")
+        elif len(word_tokenize(text1)) > max_word_limit or len(word_tokenize(text2)) > max_word_limit:
+            st.error(f"Word count exceeds the maximum limit of {max_word_limit} words.")
+        else:
+            similarity_score = calculate_similarity(text1, text2)
+            
+            # Display similarity score
+            st.subheader("Similarity Score:")
+            st.write(f"The cosine similarity between the two texts is: {similarity_score:.2f}")
 
 # About Page
 elif page == "About":
