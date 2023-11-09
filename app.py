@@ -499,37 +499,38 @@ elif page == "Keyword Extraction":
     if input_type == "Text Input":
         max_word_limit = 300
         st.write(f"Maximum Word Limit: {max_word_limit} words")
-        text_input = st.text_area("Enter text:", height=200)
+        text_input = st.text_area("Enter text:")
         
-        # Check for empty input text
-        if not text_input.strip():
-            st.error("Input text is empty. Please provide text for keyword extraction.")
-        # Check for word limit in text input
-        elif len(word_tokenize(text_input)) > max_word_limit:
-            st.error(f"Word count exceeds the maximum limit of {max_word_limit} words.")
-        elif st.button("Extract Keywords"):
-            extract_keywords(text_input)
+        if st.button("Extract Keywords"):
+            # Check for empty input text
+            if not text_input.strip():
+                st.error("Input text is empty. Please provide text for keyword extraction.")
+            # Check for word limit in text input
+            elif len(word_tokenize(text_input)) > max_word_limit:
+                st.error(f"Word count exceeds the maximum limit of {max_word_limit} words.")
+            elif:
+                extract_keywords(text_input)
     
     elif input_type == "TXT File Import":
         max_word_limit = 3000
         st.write(f"Maximum Word Limit: {max_word_limit} words")
         uploaded_file = st.file_uploader("Upload a text file", type=["txt"])
-        
-        if uploaded_file is not None:
-            file_contents = uploaded_file.read().decode("utf-8")
-            try:
-                file_contents = file_contents.decode("utf-8")
-                # Check for word limit in uploaded file
-                if len(word_tokenize(file_contents)) > max_word_limit:
-                    st.error(f"Word count exceeds the maximum limit of {max_word_limit} words.")
-                else:
-                    st.text(file_contents)
-                    if st.button("Extract Keywords"):
+
+        if st.button("Extract Keywords"):
+            if uploaded_file is not None:
+                file_contents = uploaded_file.read().decode("utf-8")
+                try:
+                    file_contents = file_contents.decode("utf-8")
+                    # Check for word limit in uploaded file
+                    if len(word_tokenize(file_contents)) > max_word_limit:
+                        st.error(f"Word count exceeds the maximum limit of {max_word_limit} words.")
+                    else:
+                        st.text(file_contents)
                         extract_keywords(file_contents)
-            except UnicodeDecodeError:
-                st.error("Invalid input: The uploaded file contains non-text data or is not in UTF-8 format.")
-        else:
-            st.info("Please upload a .txt file.")
+                except UnicodeDecodeError:
+                    st.error("Invalid input: The uploaded file contains non-text data or is not in UTF-8 format.")
+            else:
+                st.info("Please upload a .txt file.")
 
 # About Page
 elif page == "About":
