@@ -519,7 +519,7 @@ elif page == "Keyword Extraction":
 
         if st.button("Extract Keywords"):
             if uploaded_file is not None:
-                file_contents = uploaded_file.read().decode("utf-8")
+                file_contents = uploaded_file.read()
                 try:
                     file_contents = file_contents.decode("utf-8")
                     # Check for word limit in uploaded file
