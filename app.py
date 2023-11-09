@@ -99,11 +99,12 @@ def extract_keywords(text):
     word_freq = FreqDist(filtered_words)
     
     # Display keywords and their frequencies
-    st.subheader("Keywords and Their Frequencies:")
+    st.subheader("Keywords:")
     for word, freq in word_freq.most_common():
         st.write(f"- {word}: {freq}")
     
     # Plot keyword frequency distribution
+    st.subheader("Frequencies:")
     plt.figure(figsize=(10, 5))
     word_freq.plot(20, cumulative=False)
     st.pyplot(plt)
