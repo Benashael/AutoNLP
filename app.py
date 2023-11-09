@@ -104,7 +104,7 @@ def extract_keywords(text):
     
     # Display keywords and their frequencies
     st.subheader("Keywords and Their Frequencies (Dataframe):")
-    st.dataframe(keywords_df, index=False)
+    st.dataframe(keywords_df)
     
     # Plot keyword frequency distribution
     st.subheader("Keywords and Their Frequencies (Visualization Plot):")
