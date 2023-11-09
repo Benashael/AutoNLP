@@ -527,7 +527,7 @@ elif page == "Keyword Extraction":
                     if st.button("Extract Keywords"):
                         extract_keywords(file_contents)
             except UnicodeDecodeError:
-            st.error("Invalid input: The uploaded file contains non-text data or is not in UTF-8 format.")
+                st.error("Invalid input: The uploaded file contains non-text data or is not in UTF-8 format.")
         else:
             st.info("Please upload a .txt file.")
 
