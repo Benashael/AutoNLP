@@ -19,13 +19,15 @@ import io
 from io import BytesIO
 import pandas as pd
 from PIL import Image
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.metrics.pairwise import cosine_similarity
 
 # Set up Streamlit app
 st.set_page_config(page_title="AutoNLP Application", page_icon="📚", layout="wide")
 
 st.title("AutoNLP Streamlit Web App")
 
-page = st.sidebar.radio("**Select a Page**", ["Home Page", "Tokenization", "Stopwords Removal", "Stemming", "Lemmatization", "POS Tagging", "Word Cloud", "N-Grams", "Keyword Extraction", "About"])
+page = st.sidebar.radio("**Select a Page**", ["Home Page", "Tokenization", "Stopwords Removal", "Stemming", "Lemmatization", "POS Tagging", "Word Cloud", "N-Grams", "Keyword Extraction", "Text Similarity", "About"])
 
 # Function to tokenize text
 @st.cache_resource
@@ -116,6 +118,21 @@ def extract_keywords(text):
     plt.figure(figsize=(10, 5))
     word_freq.plot(20, cumulative=False)
     st.pyplot(plt)
+
+# Function to calculate text similarity
+@st.cache_resource(suppress_st_warning=True)
+def calculate_similarity(text1, text2):
+    # Tokenize the input texts
+    tokens = word_tokenize(text1 + " " + text2)
+    
+    # Create TF-IDF vectors for the texts
+    vectorizer = TfidfVectorizer()
+    tfidf_matrix = vectorizer.fit_transform([text1, text2])
+    
+    # Calculate cosine similarity
+    similarity_score = cosine_similarity(tfidf_matrix[0], tfidf_matrix[1]).flatten()[0]
+    
+    return similarity_score
 
 if page == "Home Page":
     # Home page content
@@ -501,6 +518,7 @@ elif page == "N-Grams":
             else:
                 st.info("Please upload a .txt file.")
 
+# Keyword Extraction Page
 elif page == "Keyword Extraction":
     st.title("Keyword Extraction Page")
     input_type = st.radio("Choose input type", ["Text Input", "TXT File Import"])
@@ -539,6 +557,26 @@ elif page == "Keyword Extraction":
                     st.error("Invalid input: The uploaded file contains non-text data or is not in UTF-8 format.")
             else:
                 st.info("Please upload a .txt file.")
+
+# Text Similarity Page
+elif page == "Text Similarity":
+    st.title("Text Similarity Page")
+    max_word_limit = 300
+    st.write(f"Maximum Word Limit: {max_word_limit} words")
+    text1 = st.text_area("Enter Text 1:")
+    text2 = st.text_area("Enter Text 2:")
+    
+    # Check for empty input texts
+    if not text1.strip() or not text2.strip():
+        st.error("Please provide both texts for similarity comparison.")
+    elif len(word_tokenize(text1)) > max_word_limit or len(word_tokenize(text2)) > max_word_limit:
+        st.error(f"Word count exceeds the maximum limit of {max_word_limit} words.")
+    else:
+        similarity_score = calculate_similarity(text1, text2)
+        
+        # Display similarity score
+        st.subheader("Similarity Score:")
+        st.write(f"The cosine similarity between the two texts is: {similarity_score:.2f}")
 
 # About Page
 elif page == "About":
