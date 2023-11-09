@@ -97,14 +97,17 @@ def extract_keywords(text):
     
     # Calculate word frequency
     word_freq = FreqDist(filtered_words)
+
+    # Create a DataFrame with keywords and frequencies
+    keywords_df = pd.DataFrame(word_freq.items(), columns=['Keyword', 'Frequency'])
+    keywords_df = keywords_df.sort_values(by='Frequency', ascending=False)
     
     # Display keywords and their frequencies
-    st.subheader("Keywords:")
-    for word, freq in word_freq.most_common():
-        st.write(f"- {word}: {freq}")
+    st.subheader("Keywords and Their Frequencies (Dataframe):")
+    st.dataframe(keywords_df, index=False)
     
     # Plot keyword frequency distribution
-    st.subheader("Frequencies:")
+    st.subheader("Keywords and Their Frequencies (Visualization Plot):")
     plt.figure(figsize=(10, 5))
     word_freq.plot(20, cumulative=False)
     st.pyplot(plt)
