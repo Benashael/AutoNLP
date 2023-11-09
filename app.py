@@ -105,6 +105,11 @@ def extract_keywords(text):
     # Display keywords and their frequencies
     st.subheader("Keywords and Their Frequencies (Dataframe):")
     st.dataframe(keywords_df)
+
+    csv = keywords_df.to_csv(index=False)
+    b64 = base64.b64encode(csv.encode()).decode()  # Encode to base64
+    href = f'data:file/csv;base64,{b64}'
+    st.markdown(f'<a href="{href}" download="keyword_extraction_content.csv">Click here to download the document with Keywords and Their Frequencies</a>', unsafe_allow_html=True)
     
     # Plot keyword frequency distribution
     st.subheader("Keywords and Their Frequencies (Visualization Plot):")
