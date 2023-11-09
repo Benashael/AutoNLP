@@ -149,7 +149,9 @@ if page == "Home Page":
     st.markdown("4. **Lemmatization Page:** Perform word lemmatization on the text. And, you also have the option to copy the processed content to clipboard.")
     st.markdown("5. **Part-of-Speech (POS) Tagging Page:** Tag words with their grammatical roles.")
     st.markdown("6. **Word Cloud Generation Page:** Generate a word cloud from the text.")
-    st.markdown("7. **N-Grams Page:** Create uni-grams, bi-grams, or tri-grams from the text.")
+    st.markdown("7. **N-Grams Page:** Create uni-grams, bi-grams, or tri-grams from the text. And, you also have the option to copy the processed content to clipboard.")
+    st.markdown("8. **Keyword Extraction Page:** Extract keywords along with frequencies.")
+    st.markdown("8. **Text Similarity Page:** Finds the cosine similarity between two text inputs.")
     
     st.write(
         "Please select a task from the sidebar on the left to get started. You can choose the input type, "
@@ -586,7 +588,7 @@ elif page == "About":
     st.markdown("""
     Welcome to the AutoNLP web app, a versatile tool designed to streamline Natural Language Processing (NLP) tasks and make text analysis easier than ever! 🎉
 
-    This app empowers you to perform various NLP tasks, including tokenization, stopwords removal, stemming, lemmatization, Part-of-Speech (POS) tagging, word cloud generation, and N-Grams analysis. Whether you're a data scientist, developer, or language enthusiast, AutoNLP is here to simplify and enhance your text processing.
+    This app empowers you to perform various NLP tasks, including tokenization, stopwords removal, stemming, lemmatization, Part-of-Speech (POS) tagging, word cloud generation, N-Grams analysis, keyword extraction and text similarity. Whether you're a data scientist, developer, or language enthusiast, AutoNLP is here to simplify and enhance your text processing.
 
     It's built using Streamlit and Python, offering a user-friendly interface to explore the fascinating world of NLP. Feel free to experiment, analyze, and visualize text data effortlessly. And, it's brought to you by Team AI Hub.
 
