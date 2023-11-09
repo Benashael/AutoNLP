@@ -513,7 +513,7 @@ elif page == "Keyword Extraction":
                 extract_keywords(text_input)
     
     elif input_type == "TXT File Import":
-        max_word_limit = 3000
+        max_word_limit = 2000
         st.write(f"Maximum Word Limit: {max_word_limit} words")
         uploaded_file = st.file_uploader("Upload a text file", type=["txt"])
 
@@ -526,7 +526,6 @@ elif page == "Keyword Extraction":
                     if len(word_tokenize(file_contents)) > max_word_limit:
                         st.error(f"Word count exceeds the maximum limit of {max_word_limit} words.")
                     else:
-                        st.text(file_contents)
                         extract_keywords(file_contents)
                 except UnicodeDecodeError:
                     st.error("Invalid input: The uploaded file contains non-text data or is not in UTF-8 format.")
