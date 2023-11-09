@@ -508,7 +508,7 @@ elif page == "Keyword Extraction":
             # Check for word limit in text input
             elif len(word_tokenize(text_input)) > max_word_limit:
                 st.error(f"Word count exceeds the maximum limit of {max_word_limit} words.")
-            elif:
+            else:
                 extract_keywords(text_input)
     
     elif input_type == "TXT File Import":
