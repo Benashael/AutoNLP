@@ -120,7 +120,7 @@ def extract_keywords(text):
     st.pyplot(plt)
 
 # Function to calculate text similarity
-@st.cache_resource(suppress_st_warning=True)
+@st.cache_resource
 def calculate_similarity(text1, text2):
     # Tokenize the input texts
     tokens = word_tokenize(text1 + " " + text2)
