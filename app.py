@@ -151,7 +151,7 @@ if page == "Home Page":
     st.markdown("6. **Word Cloud Generation Page:** Generate a word cloud from the text.")
     st.markdown("7. **N-Grams Page:** Create uni-grams, bi-grams, or tri-grams from the text. And, you also have the option to copy the processed content to clipboard.")
     st.markdown("8. **Keyword Extraction Page:** Extract keywords along with frequencies.")
-    st.markdown("8. **Text Similarity Page:** Finds the cosine similarity between two text inputs.")
+    st.markdown("9. **Text Similarity Page:** Finds the cosine similarity between two text inputs.")
     
     st.write(
         "Please select a task from the sidebar on the left to get started. You can choose the input type, "
