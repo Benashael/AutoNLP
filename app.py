@@ -27,6 +27,9 @@ st.set_page_config(page_title="AutoNLP Application", page_icon="📚", layout="w
 
 st.title("AutoNLP Streamlit Web App")
 
+if st.button("Return to AIHub"):
+    st.markdown("https://sites.google.com/view/aihub-1?usp=sharing", unsafe_allow_html=True)
+    
 page = st.sidebar.radio("**Select a Page**", ["Home Page", "Tokenization", "Stopwords Removal", "Stemming", "Lemmatization", "POS Tagging", "Word Cloud", "N-Grams", "Keyword Extraction", "Text Similarity", "About"])
 
 # Function to tokenize text
