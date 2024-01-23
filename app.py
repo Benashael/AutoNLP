@@ -27,6 +27,10 @@ st.set_page_config(page_title="AutoNLP Application", page_icon="📚", layout="w
 
 st.title("AutoNLP Streamlit Web App")
 
+nlpapplications_url = "https://nlpapplications.streamlit.app/#text-summarization-app"
+if st.button("Explore with different Datasets"):
+    st.write(f'<a href="{nlpapplications_url}" target="_blank">Click here to experience Sentiment Analysis and Text Summarization</a>', unsafe_allow_html=True)
+
 aihub_url = "https://sites.google.com/view/aihub-1?usp=sharing"
 if st.button("Return to AI Hub"):
     st.write(f'<a href="{aihub_url}" target="_blank">Click here to move back to AI Hub</a>', unsafe_allow_html=True)
