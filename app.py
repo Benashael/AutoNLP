@@ -26,9 +26,6 @@ from sklearn.metrics.pairwise import cosine_similarity
 st.set_page_config(page_title="AutoNLP Application", page_icon="📚", layout="wide")
 
 st.title("AutoNLP Streamlit Web App")
-
-if st.button("Return to AIHub"):
-    st.markdown("https://sites.google.com/view/aihub-1?usp=sharing", unsafe_allow_html=True)
     
 page = st.sidebar.radio("**Select a Page**", ["Home Page", "Tokenization", "Stopwords Removal", "Stemming", "Lemmatization", "POS Tagging", "Word Cloud", "N-Grams", "Keyword Extraction", "Text Similarity", "About"])
 
@@ -136,6 +133,10 @@ def calculate_similarity(text1, text2):
     similarity_score = cosine_similarity(tfidf_matrix[0], tfidf_matrix[1]).flatten()[0]
     
     return similarity_score
+
+aihub_url = "https://sites.google.com/view/aihub-1?usp=sharing"
+if st.button("Return to AI Hub"):
+    st.write(f'<a href="{aihub_url}" target="_blank">Click here to move back to AI Hub</a>', unsafe_allow_html=True)
 
 if page == "Home Page":
     # Home page content
